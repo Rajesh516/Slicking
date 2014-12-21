@@ -1,0 +1,56 @@
+
+# @author: mayank
+# .gitignore template for new Unity project
+
+# Add files/folders if u want to ignore
+Photoshop/
+Extras/
+test.txt
+AudioManagerGenerated.cs*
+Xcode/UnityGeneratedXcode
+Xcode/UnityGeneratedCode
+ipa/
+
+# Unity Specific files/folders
+[Ll]ibrary/
+[Tt]emp/
+*.unityproj
+*.tmproj
+*.csproj
+*.sln
+*.suo
+*.user
+*.pidb
+*.userprefs
+
+## OS Specific files
+# Mac OS X
+.DS_STORE
+
+# Windows
+
+
+## Editor specific files
+# if using vim (swap files)
+*.swp
+
+# xcode specific files
+.DS_Store
+*/build/*
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+profile
+*.moved-aside
+DerivedData
+.idea/
+*.hmap
+
+#CocoaPods
+Pods
