@@ -145,6 +145,7 @@ public class MonkeyAnimationScript : MonoBehaviour {
 		monkeySlidingCount++;
 		yield return new WaitForSeconds(0.4f);
 		renderer.material.mainTexture = monkeySlidingAnimation[monkeySlidingAnimation.GetLength(0)-1];
+		AnimationStateSetter (0);
 		PlayerManager.Instance.ResetColliderAfterSliding ();
 	}
 

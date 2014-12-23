@@ -19,7 +19,7 @@ public class ActivateChildOfGroupInFourthLayer : MonoBehaviour {
 	void Update () 
 	{
 		playerManager = PlayerManager.Instance;
-		if (playerManager.InReviveState () || playerManager.IsIncreaseSpeedActive()) 
+		if (playerManager.InReviveState () || playerManager.IsIncreaseSpeedActive() || IsTesting.instance.isTesting) 
 		{
 			ActivateInitialPlatform();	
 		}

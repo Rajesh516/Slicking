@@ -21,7 +21,8 @@ public class Pit : MonoBehaviour {
 			if(!PlayerManager.Instance.InReviveState())
 			{
 				if(!PlayerManager.Instance.IsIncreaseSpeedActive())
-					PlayerManager.Instance.ObstacleCollided(gameObject.collider);	
+					if(!IsTesting.instance.isTesting)
+						PlayerManager.Instance.ObstacleCollided(gameObject.collider);	
 			}
 		}
 	}

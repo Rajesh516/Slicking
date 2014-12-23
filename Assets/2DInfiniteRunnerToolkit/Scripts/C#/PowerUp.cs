@@ -63,7 +63,7 @@ public class PowerUp : MonoBehaviour
 		//Set speed related variables
 		this.verticalSpeed = 0;
 		this.verticalDistance = vDist;
-		this.horizontalSpeed = 0;
+		this.horizontalSpeed = hSpeed;
 		
 		//Get original y position
 		originalPos = this.transform.position.y;

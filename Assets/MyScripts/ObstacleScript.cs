@@ -27,8 +27,8 @@ public class ObstacleScript : MonoBehaviour {
 			{
 				if(!PlayerManager.Instance.InReviveState())
 				{
-					print ("----Collided");
-					PlayerManager.Instance.ObstacleCollided(gameObject.collider);
+					if(!IsTesting.instance.isTesting)
+						PlayerManager.Instance.ObstacleCollided(gameObject.collider);
 				}
 			}
 		}

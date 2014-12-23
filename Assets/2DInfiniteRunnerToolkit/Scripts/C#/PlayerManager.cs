@@ -106,7 +106,8 @@ public class PlayerManager : MonoBehaviour
 	{
 		if (rigidbody.velocity.y < 0)
 		{
-			rigidbody.velocity -= new Vector3 (0, 2, 0);
+			if(!rigidbody.isKinematic)
+				rigidbody.velocity -= new Vector3 (0, 2, 0);
 		}
 		//If the control are enabled
 		if (subEnabled)
@@ -131,7 +132,6 @@ public class PlayerManager : MonoBehaviour
 	//------------------------------------------------------------Obstacle Collision-------------------------------------------
 	public void ObstacleCollided(Collider other)
 	{
-		print ("Colllided");
 		//Notify the mission manager
 		UpdateMission(other.transform.name);
 		//If the sub is not sinking, and doesn't have a protection
@@ -177,39 +177,45 @@ public class PlayerManager : MonoBehaviour
 			UpdateMission(other.transform.name);
 			
 			//Activate proper function based on name
-		switch (other.transform.name)
-			{
-			case "ExtraSpeed":
-				powerUpManager.Instance.StartPowerLoader (PowerUpsType.FastLegs);
-				ExtraSpeed();
-				break;
+		if (IsTesting.instance.isTesting) {
+						if (subEnabled) {
+								powerUpManager.Instance.StartPowerLoader (PowerUpsType.Wings);
+								Wings ();
+						}	
+				} else {
+						switch (other.transform.name) {
+						case "ExtraSpeed":
+								powerUpManager.Instance.StartPowerLoader (PowerUpsType.FastLegs);
+								ExtraSpeed ();
+								break;
 				
-			case "Shield":
-				powerUpManager.Instance.StartPowerLoader (PowerUpsType.Shield);
-				RaiseShield();
-				break;
+						case "Shield":
+								powerUpManager.Instance.StartPowerLoader (PowerUpsType.Shield);
+								RaiseShield ();
+								break;
 				
-			case "Revive":
-				if (subEnabled)
-					ReviveCollected();
-				break;
+						case "Revive":
+								if (subEnabled)
+										ReviveCollected ();
+								break;
 				
-			case "CoinMagnet":				//case "SonicWave":
-				if (subEnabled) {
-					CoinMagnet(); 
-					powerUpManager.Instance.StartPowerLoader (PowerUpsType.Magnet);
-				}
+						case "CoinMagnet":				//case "SonicWave":
+								if (subEnabled) {
+										CoinMagnet (); 
+										powerUpManager.Instance.StartPowerLoader (PowerUpsType.Magnet);
+								}
 					//StartCoroutine("LaunchSonicWave");
-				break;
+								break;
 
-			case "Wings":				//case "SonicWave":
-			if (subEnabled) {
-				powerUpManager.Instance.StartPowerLoader (PowerUpsType.Wings);
-				Wings();
-			}
+						case "Wings":				//case "SonicWave":
+								if (subEnabled) {
+										powerUpManager.Instance.StartPowerLoader (PowerUpsType.Wings);
+										Wings ();
+								}
 			//StartCoroutine("LaunchSonicWave");
-			break;
-			}
+								break;
+						}
+				}
 			
 			//Reset the power up
 			other.GetComponent<PowerUp>().ResetThis();
@@ -439,7 +445,6 @@ public class PlayerManager : MonoBehaviour
 	//Sink the submarine
 	void Sink()
 	{
-		print ("Sinking---");
 		//Set crash related variables
 		crashed = true;
 		
@@ -660,7 +665,8 @@ public class PlayerManager : MonoBehaviour
 		LevelGenerator.Instance.scrollSpeed = newSpeed;
 		inWings = false;
 		canSink = true;
-		
+		rigidbody.useGravity = true;
+		rigidbody.isKinematic = false;
 		//Activate extra speed visual effects
 		EnableDisable(speedParticle, false);
 		EnableDisable(speedTrail, false);
@@ -736,7 +742,8 @@ public class PlayerManager : MonoBehaviour
 		powerUpUsed = true;
 		inWings = true;
 		canSink = false;
-		
+		rigidbody.useGravity = false;
+		rigidbody.isKinematic = true;
 		//Activate particles
 		EnableDisable(speedParticle, true);
 		EnableDisable(speedTrail, true);
@@ -784,6 +791,7 @@ public class PlayerManager : MonoBehaviour
 		//ShootWeapon ();
 		if (canJump && subEnabled) 
 		{
+			ResetColliderAfterSliding();
 			monkeyAnimationObject.GetComponent<MonkeyAnimationScript> ().AnimationStateSetter (1);
 			rigidbody.velocity = new Vector3 (0, 35, 0);
 			canJump = false;		
@@ -810,7 +818,7 @@ public class PlayerManager : MonoBehaviour
 						myBoxCollider = GetComponent<BoxCollider> ();
 						float tempHeight;
 						monkeyAnimationObject.GetComponent<MonkeyAnimationScript> ().AnimationStateSetter (4);
-						myBoxCollider.size = new Vector3 (myBoxCollider.size.x, myBoxCollider.size.y / 3, myBoxCollider.size.z); 
+						myBoxCollider.size = new Vector3 (myBoxCollider.size.x, 2.42f, myBoxCollider.size.z); 
 						myBoxCollider.center = new Vector3(myBoxCollider.center.x,-3.86f,myBoxCollider.center.z);
 				}
 		//If the player is not at the max depth, and the controls are enabled, move down
@@ -829,9 +837,9 @@ public class PlayerManager : MonoBehaviour
 	{
 		BoxCollider myBoxCollider;
 		myBoxCollider = GetComponent<BoxCollider> ();
-		monkeyAnimationObject.GetComponent<MonkeyAnimationScript> ().AnimationStateSetter (0);
+		//monkeyAnimationObject.GetComponent<MonkeyAnimationScript> ().AnimationStateSetter (0);
 		myBoxCollider.center = new Vector3(myBoxCollider.center.x,-2.36f,myBoxCollider.center.z);
-		myBoxCollider.size = new Vector3(myBoxCollider.size.x,myBoxCollider.size.y*3,myBoxCollider.size.z);
+		myBoxCollider.size = new Vector3(myBoxCollider.size.x,7.26f,myBoxCollider.size.z);
 	}
 	//Enalbe submarine controls
 	public void EnableControls()
