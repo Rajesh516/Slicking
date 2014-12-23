@@ -131,6 +131,7 @@ public class PlayerManager : MonoBehaviour
 	//------------------------------------------------------------Obstacle Collision-------------------------------------------
 	public void ObstacleCollided(Collider other)
 	{
+		print ("Colllided");
 		//Notify the mission manager
 		UpdateMission(other.transform.name);
 		//If the sub is not sinking, and doesn't have a protection
@@ -176,7 +177,7 @@ public class PlayerManager : MonoBehaviour
 			UpdateMission(other.transform.name);
 			
 			//Activate proper function based on name
-		switch ("Wings")		//		switch (other.transform.name)
+		switch (other.transform.name)
 			{
 			case "ExtraSpeed":
 				powerUpManager.Instance.StartPowerLoader (PowerUpsType.FastLegs);
@@ -747,6 +748,7 @@ public class PlayerManager : MonoBehaviour
 	//Called when the player collects/activates an extra speed
 	public void ExtraSpeed()
 	{
+		print ("Extrta Speed---");
 		//If the player is already using an extra speed, or sinking, or the controls are not enabled, return
 		if (inExtraSpeed || sinking || !subEnabled || inWings)
 			return;
@@ -940,6 +942,7 @@ public class PlayerManager : MonoBehaviour
 		//If the submarine is not reviving
 		if (!inRevive)
 		{
+			subEnabled = true;
 			//Set revive based variables
 			inRevive = true;
 			powerUpUsed = true;
@@ -972,21 +975,22 @@ public class PlayerManager : MonoBehaviour
 			
 			//Wait for 0.4 seconds, and move to starting position
 			yield return new WaitForSeconds(0.4f);
-			StartCoroutine(MoveToPosition(this.transform, new Vector3(xPos, -23, thisTransform.position.z), 1.0f, false));
+			StartCoroutine(MoveToPosition(this.transform, new Vector3(xPos, -21, thisTransform.position.z), 1.0f, false));
 			
 			//Wait for 1.2 seconds, and restart level scrolling
 			yield return new WaitForSeconds(1.2f);
             LevelGenerator.Instance.ContinueScrolling();
-			
+			//ExtraSpeed();
 			//Restart the bubble particle, and set variables
 			bubbles.Play();
 			crashed = false;
 			canSink = true;
 			subEnabled = true;
 			movingUpward = false;
-			inRevive = false;	
 			coinMagnetTriggerBool = false;
 			coinMagnetTrigger.SetActive(false);
+			yield return new WaitForSeconds(1.2f);
+			inRevive = false;	
 		}
 		
 		//If the player is already in revive, wait for the end of frame, and return to caller
@@ -1011,5 +1015,10 @@ public class PlayerManager : MonoBehaviour
 	public bool IsIncreaseSpeedActive()
 	{
 		return inExtraSpeed || inWings;
+	}
+
+	public bool InReviveState()
+	{
+		return inRevive;
 	}
 }

@@ -317,9 +317,10 @@ public class LevelGenerator : MonoBehaviour
 		//Set startValue and scrollAtCrash
 		float startValue = scrollSpeed;
 		scrollAtCrash = scrollSpeed;
-		
+		yield return new WaitForEndOfFrame();
+		scrollSpeed = 0;
 		//Slow down to 0 in time
-		var rate = 1.0f / time;
+		/*var rate = 1.0f / time;
 	    var t = 0.0f;
 	    
 	    while (t < 1.0f) 
@@ -327,7 +328,7 @@ public class LevelGenerator : MonoBehaviour
 	        t += Time.deltaTime * rate;
 	        scrollSpeed = Mathf.Lerp(startValue, 0, t);
 	        yield return new WaitForEndOfFrame();
-	    }
+	    }*/
 		
 		//Disable generation
 		canGenerate = false;

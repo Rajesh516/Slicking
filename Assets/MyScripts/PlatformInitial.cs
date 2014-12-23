@@ -11,7 +11,7 @@ public class PlatformInitial : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		playerManager = PlayerManager.Instance;
-		if (playerManager.IsIncreaseSpeedActive ()) 
+		if (playerManager.InReviveState ()) 
 		{
 			;	
 		}

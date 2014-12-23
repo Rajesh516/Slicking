@@ -6,8 +6,8 @@ public class ObstacleScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		GetComponent<BoxCollider> ().isTrigger = true;
-		if(gameObject.name.Equals("MineChain"))
-			GetComponent<BoxCollider> ().size = new Vector3(0.76f,0.76f,0);
+		//if(gameObject.name.Equals("MineChain"))
+			GetComponent<BoxCollider> ().size = new Vector3(0.76f,0.76f,4f);
 		rigidBodyObstacle = GetComponent<Rigidbody> ();
 		if (rigidBodyObstacle == null)
 			rigidBodyObstacle = gameObject.AddComponent<Rigidbody> ();
@@ -25,7 +25,11 @@ public class ObstacleScript : MonoBehaviour {
 		if (colli.gameObject.tag.Equals ("Player")) {
 			if(!colli.gameObject.name.Equals("ColliderTop"))
 			{
-				PlayerManager.Instance.ObstacleCollided(gameObject.collider);
+				if(!PlayerManager.Instance.InReviveState())
+				{
+					print ("----Collided");
+					PlayerManager.Instance.ObstacleCollided(gameObject.collider);
+				}
 			}
 		}
 		if (colli.gameObject.tag.Equals ("Weapon")) {

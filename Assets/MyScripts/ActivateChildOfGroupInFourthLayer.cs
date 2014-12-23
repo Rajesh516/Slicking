@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class ActivateChildOfGroupInFourthLayer : MonoBehaviour {
-
+	PlayerManager playerManager;
 	// Use this for initialization
 	void Start () 
 	{
@@ -16,8 +16,13 @@ public class ActivateChildOfGroupInFourthLayer : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void Update () 
+	{
+		playerManager = PlayerManager.Instance;
+		if (playerManager.InReviveState () || playerManager.IsIncreaseSpeedActive()) 
+		{
+			ActivateInitialPlatform();	
+		}
 	}
 
 	public void ActivateChildren()

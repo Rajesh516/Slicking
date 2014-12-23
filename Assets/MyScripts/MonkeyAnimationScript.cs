@@ -135,7 +135,6 @@ public class MonkeyAnimationScript : MonoBehaviour {
 	{
 		while(monkeyPresentState == 4)
 		{
-			print ("-----Sliding----"+monkeySlidingCount);
 			renderer.material.mainTexture = monkeySlidingAnimation[monkeySlidingCount];
 			monkeyDieCount = monkeyBananaThrowCount = monkeyJumpCount = monkeyRunCount = 0;
 			monkeySlidingCount++;

@@ -16,9 +16,13 @@ public class Pit : MonoBehaviour {
 
 	void OnTriggerEnter(Collider colli)
 	{
-		if (colli.gameObject.tag.Equals ("Player")) 
+		if (colli.gameObject.tag.Equals ("Player"))
 		{
-			PlayerManager.Instance.ObstacleCollided(gameObject.collider);	
+			if(!PlayerManager.Instance.InReviveState())
+			{
+				if(!PlayerManager.Instance.IsIncreaseSpeedActive())
+					PlayerManager.Instance.ObstacleCollided(gameObject.collider);	
+			}
 		}
 	}
 }

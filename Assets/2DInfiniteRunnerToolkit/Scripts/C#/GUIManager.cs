@@ -467,6 +467,7 @@ public class GUIManager : MonoBehaviour
 			case "Skip":
 				SaveMeManager.Instance.OnSkipClick ();
 				UIManager.Instance.ShowInGameUIScreen ();
+			overlay.enabled = false;
 				LevelManager.Instance.Revive();
 				//  Revive Function ( Continue Game )
 				break;

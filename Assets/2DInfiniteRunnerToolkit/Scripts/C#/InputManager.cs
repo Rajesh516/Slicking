@@ -100,12 +100,10 @@ public class InputManager : MonoBehaviour
 					vec = Camera.main.ScreenToViewportPoint(touch.position);
 					if(vec.x < 0.5)
 					{
-						print ("asfhdshfkjsfhs--------");
                     	PlayerManager.Instance.MoveUp();
 					}
 					else
 					{
-						print ("asfhdshfkjsfhs");
 						PlayerManager.Instance.Sliding();
 					}
 				}
