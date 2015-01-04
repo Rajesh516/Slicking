@@ -341,11 +341,11 @@ public class LevelGenerator : MonoBehaviour
 		//yield return new WaitForSeconds(1);
 		
 		//If the player has a revive
-        if (PlayerManager.Instance.HasRevive())
+         /*if (PlayerManager.Instance.HasRevive())
 			//Show revive button
             StartCoroutine(GUIManager.Instance.ShowRevive());
 		else
-			//Else, show finish menu
+			//Else, show finish menu*/
             GUIManager.Instance.ShowEnd();
 	}
 	//Generate a second layer element
@@ -623,5 +623,10 @@ public class LevelGenerator : MonoBehaviour
 		
 		//Generate a fourth layer element
 
+	}
+
+	public float FourthLevelScrollSpeed()
+	{
+		return scrollForg;
 	}
 }

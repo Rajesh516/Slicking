@@ -15,10 +15,12 @@ public class InputManager : MonoBehaviour
 	//Called at every frame
 	void Update () 
 	{
-		if (useTouch)
-			GetTouches();
-		else
-			GetClicks();
+#if UNITY_EDITOR
+		GetClicks();
+#else
+		GetTouches();
+#endif
+
 	}
 
 	//If playing with mouse
@@ -46,10 +48,14 @@ public class InputManager : MonoBehaviour
 				vec = Camera.main.ScreenToViewportPoint(Input.mousePosition);
 				if(vec.x < 0.5)
 				{
+
 					PlayerManager.Instance.MoveUp();
 				}
 				else
-					PlayerManager.Instance.Sliding();
+				{
+					PlayerManager.Instance.MoveUp();
+					//PlayerManager.Instance.Sliding();
+				}
 			}
 		}
 		//If the click was released
@@ -104,7 +110,8 @@ public class InputManager : MonoBehaviour
 					}
 					else
 					{
-						PlayerManager.Instance.Sliding();
+						PlayerManager.Instance.MoveUp();
+						//PlayerManager.Instance.Sliding();
 					}
 				}
 			}

@@ -57,6 +57,10 @@ public class ActivateChildOfGroupInFourthLayer : MonoBehaviour {
 			{
 				childTransform.gameObject.SetActive(true);
 			}
+			if(childTransform.name.Equals("FlyingPlatform"))
+			{
+				childTransform.gameObject.SetActive(false);
+			}
 		}
 	}
 
@@ -67,6 +71,10 @@ public class ActivateChildOfGroupInFourthLayer : MonoBehaviour {
 			if(childTransform.name.Equals("Platform_Initial"))
 			{
 				childTransform.gameObject.SetActive(false);
+			}
+			if(childTransform.name.Equals("FlyingPlatform"))
+			{
+				childTransform.gameObject.SetActive(true);
 			}
 		}
 	}

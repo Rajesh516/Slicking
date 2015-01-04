@@ -4,6 +4,7 @@ using System.Collections;
 public class LevelManager : MonoBehaviour 
 {
 	int coins 	= 0;							//Collected coins
+	int diamondsCollected = 0;
 	int torpedoExploded = 0;
     static LevelManager myInstance;
     static int instances = 0;
@@ -67,6 +68,19 @@ public class LevelManager : MonoBehaviour
 		coins++;										//Increase coin number
         MissionManager.Instance.CoinEvent(coins);				//Notify the mission manager
 	}
+
+	public void DiamondGathered()
+	{
+		diamondsCollected++;										//Increase coin number
+		//MissionManager.Instance.CoinEvent(coins);				//Notify the mission manager
+	}
+
+	public int LevelDiamonds()
+	{
+		return diamondsCollected;
+	}
+
+
     //Returns the number of collected coins
     public int Coins()
     {
@@ -91,7 +105,7 @@ public class LevelManager : MonoBehaviour
 	public void Restart()
 	{
 		coins = 0;										//Reset coin numbers
-
+		diamondsCollected = 0;
         LevelGenerator.Instance.Restart(true);					//Restart level generator
         PlayerManager.Instance.ResetStatus(true);				//Reset player status
         MissionManager.Instance.Save();							//Save mission status
@@ -102,6 +116,8 @@ public class LevelManager : MonoBehaviour
 	//Called when quiting to the main menu from the level
 	public void QuitToMain()
 	{
+		coins = 0;										//Reset coin numbers
+		diamondsCollected = 0;
         LevelGenerator.Instance.Restart(false);				//Disable level generator
         PlayerManager.Instance.ResetStatus(false);			//Reset player status
         MissionManager.Instance.Save();						//Save progress

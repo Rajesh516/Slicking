@@ -18,6 +18,7 @@ public class PowerUpScript : MonoBehaviour
 
 	void OnTriggerEnter(Collider colli)
 	{
-		PlayerManager.Instance.PowerUpsCollected(gameObject.collider);
+		if (colli.gameObject.tag.Equals ("Player"))
+			PlayerManager.Instance.PowerUpsCollected(gameObject.collider);
 	}
 }

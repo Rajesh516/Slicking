@@ -7,11 +7,13 @@ public class CoinsScript : MonoBehaviour {
 	int coinTextureNumber;
 	bool isCoroutine;
 	bool startLerping;
+	Vector3 myLocalLocation;
 	// Use this for initialization
 	void Start () {
+		myLocalLocation = transform.position;
 		startLerping = false;
 		coinTextureNumber = 0;
-		renderer.material.mainTexture = coinTextures [0];
+		renderer.material.mainTexture = coinTextures [4];
 		rigidBodyCoins = GetComponent<Rigidbody> ();
 		if (rigidBodyCoins == null)
 						rigidBodyCoins = gameObject.AddComponent<Rigidbody> ();
@@ -22,10 +24,12 @@ public class CoinsScript : MonoBehaviour {
 
 	void OnEnable()
 	{
+		if(myLocalLocation != Vector3.zero)
+			transform.position = myLocalLocation;
 		startLerping = false;
 		isCoroutine = true;
 		coinTextureNumber = 0;
-		StartCoroutine (CoinRotation ());
+		//StartCoroutine (CoinRotation ());
 	}
 
 	void OnDisable()
@@ -39,7 +43,7 @@ public class CoinsScript : MonoBehaviour {
 	{
 		if (startLerping) 
 		{
-			transform.position = Vector3.Lerp(transform.position,PlayerManager.Instance.MyTransform(),Time.deltaTime * 3);	
+			transform.position = Vector3.Lerp(transform.position,PlayerManager.Instance.MyTransform(),Time.deltaTime * 6);	
 		}
 	}
 

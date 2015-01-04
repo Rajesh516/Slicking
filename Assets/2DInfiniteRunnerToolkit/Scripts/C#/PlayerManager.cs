@@ -55,7 +55,7 @@ public class PlayerManager : MonoBehaviour
 	bool inWings							= false;					//The submarine is using the extra speed power up
 	bool paused								= false;					//The game is paused/unpaused
 	bool shopReviveUsed						= false;					//The shop revive is used/unused
-	bool canJump;
+	int canJump;
 	bool powerUpUsed						= false;					//A power up is used/unused
 	bool coinMagnetTriggerBool				= false;
 	Transform thisTransform;											//The transform of this object stored
@@ -88,7 +88,7 @@ public class PlayerManager : MonoBehaviour
 		}
 		coinMagnetTriggerBool = false;
 		coinMagnetTrigger.SetActive(false);
-		canJump = true;
+		canJump = 0;
         //Calibrates the myInstance static variable
         instances++;
 		monkeyAnimationObject.GetComponent<MonkeyAnimationScript> ().AnimationStateSetter (0);
@@ -179,8 +179,8 @@ public class PlayerManager : MonoBehaviour
 			//Activate proper function based on name
 		if (IsTesting.instance.isTesting) {
 						if (subEnabled) {
-								powerUpManager.Instance.StartPowerLoader (PowerUpsType.Wings);
-								Wings ();
+								powerUpManager.Instance.StartPowerLoader (PowerUpsType.Magnet);
+								CoinMagnet ();
 						}	
 				} else {
 						switch (other.transform.name) {
@@ -306,12 +306,24 @@ public class PlayerManager : MonoBehaviour
 		//print ("---" + colli.gameObject.name);
 		if (colli.gameObject.tag.Equals ("Platform") && subEnabled) 
 		{
-			canJump = true;
+			canJump = 0;
 			if(monkeyAnimationObject.GetComponent<MonkeyAnimationScript> ().MonkeyPresentStateGetter() != 4)
 				monkeyAnimationObject.GetComponent<MonkeyAnimationScript> ().AnimationStateSetter (0);
 		}
 						
 	}
+
+	/*void OnCollisionExit(Collision colli)
+	{
+		//print ("---" + colli.gameObject.name);
+		if (colli.gameObject.tag.Equals ("Platform") && subEnabled) 
+		{
+			canJump = false;
+			//if(monkeyAnimationObject.GetComponent<MonkeyAnimationScript> ().MonkeyPresentStateGetter() != 4)
+			//	monkeyAnimationObject.GetComponent<MonkeyAnimationScript> ().AnimationStateSetter (0);
+		}
+		
+	}*/
 
 
 	//Calculate distances to minDepth and maxDepth
@@ -505,6 +517,7 @@ public class PlayerManager : MonoBehaviour
 	{
 		//Register revive, Show hearth on the GUI, and disable additional revive generation
 		hasRevive = true;
+		LevelManager.Instance.DiamondGathered ();
 		GUIManager.Instance.RevivePicked();
         LevelGenerator.Instance.powerUpMain.DisableReviveGeneration();
 	}
@@ -552,7 +565,7 @@ public class PlayerManager : MonoBehaviour
 		var rate = 1.0f / time;
 	    var t = 0.0f;
 		
-	    while (t < 1.0f) 
+	    /*while (t < 1.0f) 
 	    {
 			//If the game is not paused, increase t, and scale the object
 			if (!paused)
@@ -562,7 +575,7 @@ public class PlayerManager : MonoBehaviour
 			}
 			
 			yield return new WaitForEndOfFrame();
-	    }
+	    }*/
 		
 		//If the object is makred, disable it
         if (deactivate)
@@ -571,6 +584,18 @@ public class PlayerManager : MonoBehaviour
 		//If the object is the shield, enable it's shield
 		if (obj.name == "Shield")
 			shieldCollider.enabled = true;
+		if (!deactivate) {
+			float timeofShield = StaticData.Instance.GetPowerUpTimer (PowerUpsType.Shield);
+						double waited = 0;
+						while (waited <= timeofShield) {
+								//If the game is not paused, increase waited time
+								if (!paused)
+										waited += Time.deltaTime;
+								//Wait for the end of the frame
+								yield return 0;
+						}
+						StartCoroutine(DisableShield());
+				}
 	}
 	//Disable shield
 	IEnumerator DisableShield()
@@ -678,7 +703,7 @@ public class PlayerManager : MonoBehaviour
 	IEnumerator SinkEffects()
 	{
 		//Wait for 0.5 seconds, and stop the level scrolling in 2.5 seconds
-		yield return new WaitForSeconds(0.5f);
+		//yield return new WaitForSeconds(0.5f);
         LevelGenerator.Instance.StartCoroutine("StopScrolling", 2.5f);
 
 		//Wait for 2.75 seconds, and disable smoke emission
@@ -755,7 +780,6 @@ public class PlayerManager : MonoBehaviour
 	//Called when the player collects/activates an extra speed
 	public void ExtraSpeed()
 	{
-		print ("Extrta Speed---");
 		//If the player is already using an extra speed, or sinking, or the controls are not enabled, return
 		if (inExtraSpeed || sinking || !subEnabled || inWings)
 			return;
@@ -789,12 +813,13 @@ public class PlayerManager : MonoBehaviour
 	public void MoveUp()
 	{
 		//ShootWeapon ();
-		if (canJump && subEnabled) 
+		if ((canJump < 2) && subEnabled) 
 		{
-			ResetColliderAfterSliding();
-			monkeyAnimationObject.GetComponent<MonkeyAnimationScript> ().AnimationStateSetter (1);
+			//ResetColliderAfterSliding();
+			if(canJump == 0)
+				monkeyAnimationObject.GetComponent<MonkeyAnimationScript> ().AnimationStateSetter (1);
 			rigidbody.velocity = new Vector3 (0, 35, 0);
-			canJump = false;		
+			canJump++;		
 		}
 		//If the player is not at the min depth, and the controls are enabled, move up
 		//if (distanceToMin > 0 && subEnabled)	
@@ -813,7 +838,7 @@ public class PlayerManager : MonoBehaviour
 	//Called from the Input manager
 	public void Sliding()
 	{
-		if (canJump) {
+		if (canJump < 2) {
 						BoxCollider myBoxCollider;
 						myBoxCollider = GetComponent<BoxCollider> ();
 						float tempHeight;
@@ -871,7 +896,7 @@ public class PlayerManager : MonoBehaviour
 		powerUpUsed = false;
 
 		//Reset power up particles/effects
-		shield.transform.localScale = new Vector3(0.01f, 1, 0.01f);
+		shield.transform.localScale = new Vector3(18f, 16.2f, 1f);
 		EnableDisable(speedParticle, false);
 		EnableDisable(speedTrail, false);
 		firstObstacleGenerated = false;
@@ -897,6 +922,7 @@ public class PlayerManager : MonoBehaviour
 		//If moveToStart, move the submarine from the resting position to the starting position
 		if (moveToStart)
 		{
+			//transform.position = new Vector3(xPos, -23, thisTransform.position.z);
 			StartCoroutine(MoveToPosition(this.transform, new Vector3(xPos, -23, thisTransform.position.z), 1.0f, true));
 		}
 
@@ -983,7 +1009,9 @@ public class PlayerManager : MonoBehaviour
 			
 			//Wait for 0.4 seconds, and move to starting position
 			yield return new WaitForSeconds(0.4f);
-			StartCoroutine(MoveToPosition(this.transform, new Vector3(xPos, -21, thisTransform.position.z), 1.0f, false));
+			transform.position = new Vector3(xPos, -20f, thisTransform.position.z);
+			subEnabled = true;
+			//StartCoroutine(MoveToPosition(this.transform, new Vector3(xPos, -21, thisTransform.position.z), 1.0f, false));
 			
 			//Wait for 1.2 seconds, and restart level scrolling
 			yield return new WaitForSeconds(1.2f);

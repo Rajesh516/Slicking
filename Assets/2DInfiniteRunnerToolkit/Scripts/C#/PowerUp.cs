@@ -29,9 +29,12 @@ public class PowerUp : MonoBehaviour
 	//Called at every frame
 	void Update () 
 	{	
+
 		//If the game is not paused, and the power up can move
 		if (!paused && canMove)
 		{
+			horizontalSpeed = LevelGenerator.Instance.FourthLevelScrollSpeed();
+			print ("horizontalSpeed----"+horizontalSpeed);
 			//Get current position
 			nextPos = this.transform.position;
 			
