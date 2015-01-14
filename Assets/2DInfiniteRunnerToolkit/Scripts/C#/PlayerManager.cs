@@ -179,8 +179,8 @@ public class PlayerManager : MonoBehaviour
 			//Activate proper function based on name
 		if (IsTesting.instance.isTesting) {
 						if (subEnabled) {
-								powerUpManager.Instance.StartPowerLoader (PowerUpsType.Magnet);
-								CoinMagnet ();
+								powerUpManager.Instance.StartPowerLoader (PowerUpsType.FastLegs);
+								ExtraSpeed ();
 						}	
 				} else {
 						switch (other.transform.name) {
@@ -813,13 +813,28 @@ public class PlayerManager : MonoBehaviour
 	public void MoveUp()
 	{
 		//ShootWeapon ();
-		if ((canJump < 2) && subEnabled) 
-		{
-			//ResetColliderAfterSliding();
-			if(canJump == 0)
-				monkeyAnimationObject.GetComponent<MonkeyAnimationScript> ().AnimationStateSetter (1);
-			rigidbody.velocity = new Vector3 (0, 35, 0);
-			canJump++;		
+
+		//For Double Jump
+		if (DataManager.Instance.GetCurrentCharacter () == 5) {
+						if ((canJump < 2) && subEnabled) {
+								//ResetColliderAfterSliding();
+								if (canJump == 0)
+										monkeyAnimationObject.GetComponent<MonkeyAnimationScript> ().AnimationStateSetter (1);
+								rigidbody.velocity = new Vector3 (0, 35, 0);
+								canJump++;		
+						}
+				} 
+		else {
+			//For Single jump
+			if ((canJump < 1) &&subEnabled) 
+			{
+				//ResetColliderAfterSliding();
+				if (canJump == 0)
+					monkeyAnimationObject.GetComponent<MonkeyAnimationScript> ().AnimationStateSetter (1);
+				rigidbody.velocity = new Vector3 (0, 35, 0);
+				canJump++;
+			}
+				
 		}
 		//If the player is not at the min depth, and the controls are enabled, move up
 		//if (distanceToMin > 0 && subEnabled)	

@@ -239,7 +239,7 @@ public class LevelGenerator : MonoBehaviour
 		canGeneratePowerUp = false;
 		
 		//Get a random number between 15 and 30
-		int n = Random.Range(10, 30);
+		int n = Random.Range(20, 35);
 		
 		//Wait for n seconds
 		double waited = 0;
