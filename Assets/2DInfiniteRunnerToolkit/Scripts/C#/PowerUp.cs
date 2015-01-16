@@ -34,7 +34,7 @@ public class PowerUp : MonoBehaviour
 		if (!paused && canMove)
 		{
 			horizontalSpeed = LevelGenerator.Instance.FourthLevelScrollSpeed();
-			print ("horizontalSpeed----"+horizontalSpeed);
+			//print ("horizontalSpeed----"+horizontalSpeed);
 			//Get current position
 			nextPos = this.transform.position;
 			

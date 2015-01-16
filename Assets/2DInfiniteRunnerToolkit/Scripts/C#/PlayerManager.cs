@@ -318,7 +318,8 @@ public class PlayerManager : MonoBehaviour
 		//print ("---" + colli.gameObject.name);
 		if (colli.gameObject.tag.Equals ("Platform") && subEnabled) 
 		{
-			canJump = false;
+			print ("------Exit");
+			canJump = 1;
 			//if(monkeyAnimationObject.GetComponent<MonkeyAnimationScript> ().MonkeyPresentStateGetter() != 4)
 			//	monkeyAnimationObject.GetComponent<MonkeyAnimationScript> ().AnimationStateSetter (0);
 		}
@@ -991,6 +992,7 @@ public class PlayerManager : MonoBehaviour
 		//If the submarine is not reviving
 		if (!inRevive)
 		{
+			canJump = 0;
 			subEnabled = true;
 			//Set revive based variables
 			inRevive = true;
@@ -1071,5 +1073,10 @@ public class PlayerManager : MonoBehaviour
 	public bool InReviveState()
 	{
 		return inRevive;
+	}
+
+	public void CanJumpSetter(int temp)
+	{
+		canJump = temp;
 	}
 }
