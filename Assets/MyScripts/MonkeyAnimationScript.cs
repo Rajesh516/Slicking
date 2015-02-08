@@ -82,7 +82,7 @@ public class MonkeyAnimationScript : MonoBehaviour {
 			renderer.material.mainTexture = monkeyRunAnimation[monkeyRunCount];
 			monkeySlidingCount = monkeyBananaThrowCount = monkeyDieCount = monkeyJumpCount = 0;
 			monkeyRunCount++;
-		yield return new WaitForSeconds(0.03f);
+		yield return new WaitForSeconds(0.02f);
 		if(monkeyRunCount == monkeyRunAnimation.GetLength(0))
 			monkeyRunCount = 0;
 		}
@@ -95,7 +95,7 @@ public class MonkeyAnimationScript : MonoBehaviour {
 			renderer.material.mainTexture = monkeyBananaThrowAnimation[monkeyBananaThrowCount];
 			monkeySlidingCount = monkeyRunCount = monkeyDieCount = monkeyJumpCount = 0;
 			monkeyBananaThrowCount++;
-			yield return new WaitForSeconds(0.05f);
+			yield return new WaitForSeconds(0.04f);
 			if(monkeyBananaThrowCount == monkeyRunAnimation.GetLength(0))
 			{
 				monkeyBananaThrowCount = 0;
@@ -108,7 +108,7 @@ public class MonkeyAnimationScript : MonoBehaviour {
 	{
 		while(monkeyPresentState == 1)
 		{
-			yield return new WaitForSeconds(0.07f);
+			yield return new WaitForSeconds(0.02f);
 			renderer.material.mainTexture = monkeyJumpAnimation[monkeyJumpCount];
 			monkeySlidingCount = monkeyBananaThrowCount = monkeyDieCount = monkeyRunCount = 0;
 			monkeyJumpCount++;

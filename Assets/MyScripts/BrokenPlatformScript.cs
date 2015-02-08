@@ -29,6 +29,7 @@ public class BrokenPlatformScript : MonoBehaviour {
 
 	void OnCollisionExit(Collision colli)
 	{
+		return;
 				//print ("---" + colli.gameObject.name);
 				if (colli.gameObject.tag.Equals ("Player")) 
 				{

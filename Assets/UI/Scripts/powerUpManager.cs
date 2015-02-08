@@ -11,10 +11,12 @@ public class powerUpManager : MonoBehaviour {
 	public int TotalIcons;
 	public float GapIcons;
 	public Vector2 IntialPos ;
-
+	public tk2dSprite sprite1;
+	public tk2dSprite sprite2;
 	bool IsCurrentPowerActive1 = false;	
 	bool IsCurrentPowerActive2 = false;
 	int CurrentOrder = 0;
+	PowerUpsType CurrentType;
 
 	// Use this for initialization
 
@@ -30,8 +32,9 @@ public class powerUpManager : MonoBehaviour {
 	}
 
 	public void StartPowerLoader(PowerUpsType type) {
+		CurrentType = type;
 		switch (type) {
-		case PowerUpsType.Shield : StartLoader(StaticData.Instance.GetPowerUpTimer (type)); break;
+		case PowerUpsType.Shield : StartLoader(StaticData.Instance.GetPowerUpTimer (type));  break;
 		case PowerUpsType.Magnet : StartLoader(StaticData.Instance.GetPowerUpTimer (type)); break;
 		case PowerUpsType.FastLegs : StartLoader(StaticData.Instance.GetPowerUpTimer (type)); break;
 		case PowerUpsType.Wings : StartLoader(StaticData.Instance.GetPowerUpTimer (type)); break;
@@ -52,6 +55,7 @@ public class powerUpManager : MonoBehaviour {
 	void CallLoader1(float Timer ){
 		IsCurrentPowerActive1 = true;
 		PowerUpGameobject.SetActive (true);
+		sprite1.SetSprite (StaticData.Instance.GetPowerUpSpriteName (CurrentType));
 		ArrangeIcons (Icons);
 		StartCoroutine ("Loader", Timer);
 	}
@@ -59,6 +63,7 @@ public class powerUpManager : MonoBehaviour {
 	void CallLoader2(float Timer ) {
 		IsCurrentPowerActive2 = true;
 		PowerUpGameobject2.SetActive(true);
+		sprite2.SetSprite (StaticData.Instance.GetPowerUpSpriteName (CurrentType));
 		ArrangeIcons (Icons2);
 		StartCoroutine ("Loader2", Timer);
 	}

@@ -152,6 +152,7 @@ public class GUIManager : MonoBehaviour
 			//Disable it
 			audioEnabled = false;
 			audioButton.GetComponent<tk2dSprite>().SetSprite (SoundTexts[0]); 
+			AudioListener.volume = 0;
 		}
 		//Else it is disabled
 		else
@@ -159,6 +160,7 @@ public class GUIManager : MonoBehaviour
 			//Enable it
 			audioButton.GetComponent<tk2dSprite>().SetSprite (SoundTexts[1]); 
 			audioEnabled = true;
+			AudioListener.volume = 1;
 		}
 	}
 	//Show/Hide main menu mission list
@@ -300,7 +302,7 @@ public class GUIManager : MonoBehaviour
 
 		SaveMeManager.Instance.GameStart ();
 		UIManager.Instance.ShowInGameUIScreen ();
-
+		AudioManager.Instance.PlayGameSound ();
 		//Start the level
         LevelManager.Instance.StartLevel();
 	}
@@ -353,6 +355,7 @@ public class GUIManager : MonoBehaviour
     {
         //Set starting to false, and fade the screen
         starting = false;
+		AudioManager.Instance.PlayHomeScreenSound ();
 		StartCoroutine(FadeScreen(0.2f, 0.5f));
 
         //If the quit is called from the pause menu
@@ -421,7 +424,7 @@ public class GUIManager : MonoBehaviour
 				break;
 			
 			case "AudioEnabler":
-				AuidoTriggerer(button.gameObject);
+					AuidoTriggerer(button.gameObject);
 				break;
 			
 			case "Missions":
@@ -467,14 +470,14 @@ public class GUIManager : MonoBehaviour
 			case "Skip":
 				SaveMeManager.Instance.OnSkipClick ();
 				UIManager.Instance.ShowInGameUIScreen ();
-			overlay.enabled = false;
+				overlay.enabled = false;
 				LevelManager.Instance.Revive();
 				//  Revive Function ( Continue Game )
 				break;
 
 			case "PlayTriggerer":
 				StartToPlay();
-				powerUpManager.Instance.StartPowerLoader (PowerUpsType.Magnet);
+				//powerUpManager.Instance.StartPowerLoader (PowerUpsType.Magnet);
 				break;
 			
 			case "BuySpeed":

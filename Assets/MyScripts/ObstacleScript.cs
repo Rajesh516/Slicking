@@ -23,6 +23,7 @@ public class ObstacleScript : MonoBehaviour {
 	void OnTriggerEnter(Collider colli)
 	{
 		if (colli.gameObject.tag.Equals ("Player")) {
+			AudioManager.Instance.playSound (SoundTypes.Crash);
 			if(!colli.gameObject.name.Equals("ColliderTop"))
 			{
 				if(!PlayerManager.Instance.InReviveState())

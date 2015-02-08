@@ -48,7 +48,6 @@ public class InputManager : MonoBehaviour
 				vec = Camera.main.ScreenToViewportPoint(Input.mousePosition);
 				if(vec.x < 0.5)
 				{
-
 					PlayerManager.Instance.MoveUp();
 				}
 				else

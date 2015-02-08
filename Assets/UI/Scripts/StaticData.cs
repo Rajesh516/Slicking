@@ -10,6 +10,7 @@ public class StaticData : MonoBehaviour {
 	public string[] UpgradesPowerScolls;
 	public int[] PowerUpCost;
 	public float[] powerUpTimers;
+	public string[] powerUpSprites;
 
 	// Use this for initialization
 	void Awake () {
@@ -53,5 +54,17 @@ public class StaticData : MonoBehaviour {
 		case PowerUpsType.Wings : return PowerUpCost[3]; 
 		}
 		return 0;
+	}
+
+	
+	public string GetPowerUpSpriteName(PowerUpsType powerType) {
+		
+		switch(powerType) {
+		case PowerUpsType.Shield : return powerUpSprites[0]; 	
+		case PowerUpsType.Magnet : return powerUpSprites[1]; 
+		case PowerUpsType.FastLegs : return powerUpSprites[2]; 
+		case PowerUpsType.Wings : return powerUpSprites[3]; 
+		}
+		return "";
 	}
 }

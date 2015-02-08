@@ -85,7 +85,8 @@ namespace Facebook
         public override void Init(
             InitDelegate onInitComplete,
             string appId,
-            bool cookie = false,
+            bool cookie 
+			= false,
             bool logging = true,
             bool status = true,
             bool xfbml = false,

@@ -24,12 +24,9 @@ public class AdMobGuiManager : MonoBehaviour {
 	}
 	
 	public void Init () {			//Android 595bb129f60b4751 // Iphone 52e5e35b50fd491f
-		CreateInterstitial ();
+		//CreateInterstitial ();
 	}
 
-	public void Init (bool Show) {	
-		CreateInterstitial ();
-	}
 	
 	void CreateInterstitial() {
 		#if UNITY_ANDROID	

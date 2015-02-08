@@ -150,7 +150,7 @@ public class PlayerManager : MonoBehaviour
 		}
 		//Play explosion particle
 		if (!other.tag.Equals ("Pit")) {
-						PlayExplosion (other.transform);
+			PlayExplosion (other.transform);
 						//if (monkeyAnimationObject.GetComponent<MonkeyAnimationScript> ().MonkeyPresentStateGetter () != 2)
 								//monkeyAnimationObject.GetComponent<MonkeyAnimationScript> ().AnimationStateSetter (2);
 				} else {
@@ -303,14 +303,15 @@ public class PlayerManager : MonoBehaviour
 	}*/
 	void OnCollisionEnter(Collision colli)
 	{
+		ij++;
 		//print ("---" + colli.gameObject.name);
 		if (colli.gameObject.tag.Equals ("Platform") && subEnabled) 
 		{
 			canJump = 0;
-			if(monkeyAnimationObject.GetComponent<MonkeyAnimationScript> ().MonkeyPresentStateGetter() != 4)
+			if(monkeyAnimationObject.GetComponent<MonkeyAnimationScript> ().MonkeyPresentStateGetter() != 4) {
 				monkeyAnimationObject.GetComponent<MonkeyAnimationScript> ().AnimationStateSetter (0);
-		}
-						
+			}
+		}				
 	}
 
 	/*void OnCollisionExit(Collision colli)
@@ -404,6 +405,7 @@ public class PlayerManager : MonoBehaviour
 		//Apply new rotation and position
 		thisTransform.eulerAngles = newRotation;
 		thisTransform.position += Vector3.up * speed * Time.deltaTime;
+		Debug.Log ("MoveAndRotate");
 	}
 	//Update mission manager based on name
 	void UpdateMission(string name)
@@ -714,6 +716,7 @@ public class PlayerManager : MonoBehaviour
 	//Move obj to endPos in time
 	IEnumerator MoveToPosition (Transform obj, Vector3 endPos, float time, bool enableSub) 
 	{
+		Debug.Log ("MoveToPosition");
 		//Enable the sub bubble particle with increased emission, if needed
 		if (enableSub)
 		{
@@ -733,7 +736,8 @@ public class PlayerManager : MonoBehaviour
 			if (!paused)
 			{
 				i += Time.deltaTime * rate;
-				obj.position = Vector3.Lerp(startPos, endPos, i);
+				obj.position = endPos;
+				//obj.position = Vector3.Lerp(startPos, endPos, i);
 			}
 			
 			//Wait for the end of frame
@@ -810,13 +814,15 @@ public class PlayerManager : MonoBehaviour
 		shieldActive = true;
 		StartCoroutine(ScaleObject(shield.transform, new Vector3(18, 16.2f, 1), 0.35f, false));
 	}
+	int ij = 0;
 	//Called from the Input manager
 	public void MoveUp()
 	{
 		//ShootWeapon ();
-
+		//Debug.Log ("2");
 		//For Double Jump
 		if (DataManager.Instance.GetCurrentCharacter () == 5) {
+			//Debug.Log ("3");
 						if ((canJump < 2) && subEnabled) {
 								//ResetColliderAfterSliding();
 								if (canJump == 0)
@@ -826,17 +832,24 @@ public class PlayerManager : MonoBehaviour
 						}
 				} 
 		else {
-			//For Single jump
+//			Debug.Log ("3 " +ij);
+			//For Single jump;
+			//Debug.Log ("4 " + canJump);
 			if ((canJump < 1) &&subEnabled) 
 			{
+				//Debug.Log ("5");
+				//Debug.Log ("4 " +ij);
 				//ResetColliderAfterSliding();
-				if (canJump == 0)
+				if (canJump == 0) {
 					monkeyAnimationObject.GetComponent<MonkeyAnimationScript> ().AnimationStateSetter (1);
-				rigidbody.velocity = new Vector3 (0, 35, 0);
+					//Debug.Log ("6");
+				}
+				rigidbody.velocity = new Vector3 (0, 33, 0);
 				canJump++;
 			}
 				
 		}
+		ij++;
 		//If the player is not at the min depth, and the controls are enabled, move up
 		//if (distanceToMin > 0 && subEnabled)	
 		//	movingUpward = true;
@@ -919,7 +932,6 @@ public class PlayerManager : MonoBehaviour
 		
 		//Reset rotation and position
 		newRotation	= new Vector3(0, 0, 0);
-		
 		this.transform.position = new Vector3(startingPos, -25.5f, thisTransform.position.z);
 		this.transform.eulerAngles = newRotation;
 		//Reset texture
@@ -939,7 +951,7 @@ public class PlayerManager : MonoBehaviour
 		if (moveToStart)
 		{
 			//transform.position = new Vector3(xPos, -23, thisTransform.position.z);
-			StartCoroutine(MoveToPosition(this.transform, new Vector3(xPos, -23, thisTransform.position.z), 1.0f, true));
+			StartCoroutine(MoveToPosition(this.transform, new Vector3(xPos, -24.8745f, thisTransform.position.z), 1.0f, true));
 		}
 
 		coinMagnetTriggerBool = false;
@@ -1026,12 +1038,12 @@ public class PlayerManager : MonoBehaviour
 			
 			//Wait for 0.4 seconds, and move to starting position
 			yield return new WaitForSeconds(0.4f);
-			transform.position = new Vector3(xPos, -20f, thisTransform.position.z);
+			transform.position = new Vector3(xPos, -10f, thisTransform.position.z);
 			subEnabled = true;
 			//StartCoroutine(MoveToPosition(this.transform, new Vector3(xPos, -21, thisTransform.position.z), 1.0f, false));
 			
 			//Wait for 1.2 seconds, and restart level scrolling
-			yield return new WaitForSeconds(1.2f);
+			yield return new WaitForSeconds(1.1f);
             LevelGenerator.Instance.ContinueScrolling();
 			//ExtraSpeed();
 			//Restart the bubble particle, and set variables
