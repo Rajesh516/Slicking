@@ -307,7 +307,8 @@ public class PlayerManager : MonoBehaviour
 		//print ("---" + colli.gameObject.name);
 		if (colli.gameObject.tag.Equals ("Platform") && subEnabled) 
 		{
-			canJump = 0;
+			print ("------Here");
+			CanJumpSetter(0);
 			if(monkeyAnimationObject.GetComponent<MonkeyAnimationScript> ().MonkeyPresentStateGetter() != 4) {
 				monkeyAnimationObject.GetComponent<MonkeyAnimationScript> ().AnimationStateSetter (0);
 			}
@@ -405,7 +406,6 @@ public class PlayerManager : MonoBehaviour
 		//Apply new rotation and position
 		thisTransform.eulerAngles = newRotation;
 		thisTransform.position += Vector3.up * speed * Time.deltaTime;
-		Debug.Log ("MoveAndRotate");
 	}
 	//Update mission manager based on name
 	void UpdateMission(string name)
@@ -716,7 +716,6 @@ public class PlayerManager : MonoBehaviour
 	//Move obj to endPos in time
 	IEnumerator MoveToPosition (Transform obj, Vector3 endPos, float time, bool enableSub) 
 	{
-		Debug.Log ("MoveToPosition");
 		//Enable the sub bubble particle with increased emission, if needed
 		if (enableSub)
 		{

@@ -82,7 +82,7 @@ public class MonkeyAnimationScript : MonoBehaviour {
 			renderer.material.mainTexture = monkeyRunAnimation[monkeyRunCount];
 			monkeySlidingCount = monkeyBananaThrowCount = monkeyDieCount = monkeyJumpCount = 0;
 			monkeyRunCount++;
-		yield return new WaitForSeconds(0.02f);
+		yield return new WaitForSeconds(0.025f);
 		if(monkeyRunCount == monkeyRunAnimation.GetLength(0))
 			monkeyRunCount = 0;
 		}

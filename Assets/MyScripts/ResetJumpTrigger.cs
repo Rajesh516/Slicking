@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BrokenPlatformJumpReset : MonoBehaviour {
+public class ResetJumpTrigger : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -15,9 +15,9 @@ public class BrokenPlatformJumpReset : MonoBehaviour {
 
 	void OnTriggerEnter(Collider colli)
 	{
-		if (colli.gameObject.tag.Equals ("Player")) 
+		print ("-----" + colli.gameObject.tag.Equals ("Player"));	
+		if (colli.gameObject.tag.Equals ("Player"))
 		{
-			print ("------CanJumpSetter");
 			PlayerManager.Instance.CanJumpSetter(1);
 		}
 	}

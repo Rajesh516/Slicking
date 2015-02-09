@@ -33,7 +33,7 @@ public class BrokenPlatformScript : MonoBehaviour {
 				//print ("---" + colli.gameObject.name);
 				if (colli.gameObject.tag.Equals ("Player")) 
 				{
-			PlayerManager.Instance.CanJumpSetter(1);
+					PlayerManager.Instance.CanJumpSetter(1);
 				}
 	}
 }

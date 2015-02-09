@@ -74,10 +74,11 @@ public class LevelGenerator : MonoBehaviour
 
 		//Sets the starting values
 		defaultScroll = scrollSpeed;
-		
-		scrollBackg = scrollSpeed * 12.5f;
-		scrollMiddle = scrollBackg * 3;
-		scrollForg = scrollBackg * 8;
+
+		ScrollingSpeed ();
+		//scrollBackg = scrollSpeed * 12.5f;
+		//scrollMiddle = scrollBackg * 3;
+		//scrollForg = scrollBackg * 8;
 		
 		//Generate a seconds and third layer in the middle
 		GenerateSecondLayer(1);
@@ -117,12 +118,13 @@ public class LevelGenerator : MonoBehaviour
 		//If can modify speed
 		if (canModifySpeed)
 			//Calculate layer scrolling speed
-			scrollSpeed = defaultScroll + (((maxScrollSpeedDist - (maxScrollSpeedDist - distance)) / maxScrollSpeedDist) * (maxScrollSpeed - defaultScroll));
+			scrollSpeed = defaultScroll + ((((maxScrollSpeedDist - (maxScrollSpeedDist - distance)) / maxScrollSpeedDist) * (maxScrollSpeed - defaultScroll))*0.75f);
 		
 		//Calculate the other scrolling speeds
-		scrollBackg = scrollSpeed * 12.5f;
-		scrollMiddle = scrollBackg * 3;
-		scrollForg = scrollBackg * 8;
+		ScrollingSpeed ();
+		//scrollBackg = scrollSpeed * 12.5f;
+		//scrollMiddle = scrollBackg * 3;
+		//scrollForg = scrollBackg * 8;
 		
 		//Scroll the elements in the list activeElements, with a speed maching their layer
 		for (int i = 0; i < activeElements.Count; i++)
@@ -629,4 +631,12 @@ public class LevelGenerator : MonoBehaviour
 	{
 		return scrollForg;
 	}
+
+	void ScrollingSpeed()
+	{
+		scrollBackg = scrollSpeed * 12.5f;
+		scrollMiddle = scrollBackg * 2;
+		scrollForg = scrollBackg * 7f;
+	}
+
 }
