@@ -7,7 +7,7 @@ public class ObstacleScript : MonoBehaviour {
 	void Start () {
 		GetComponent<BoxCollider> ().isTrigger = true;
 		//if(gameObject.name.Equals("MineChain"))
-			GetComponent<BoxCollider> ().size = new Vector3(0.76f,0.76f,4f);
+			GetComponent<BoxCollider> ().size = new Vector3(0.66f,0.66f,4f);
 		rigidBodyObstacle = GetComponent<Rigidbody> ();
 		if (rigidBodyObstacle == null)
 			rigidBodyObstacle = gameObject.AddComponent<Rigidbody> ();
